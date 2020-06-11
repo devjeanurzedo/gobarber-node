@@ -54,7 +54,7 @@ class UserController {
 
     const { email, oldPassword } = req.body;
 
-    const user = await User.findByPk(req.userId);
+    const user = await User.findByPk(req.Id);
 
     if (email && email != user.email) {
       const userExists = await User.findOne({ where: { email } });
@@ -70,16 +70,17 @@ class UserController {
 
     try {
       const { id, name, provider } = await user.update(req.body);
+      return res.json({
+        id,
+        name,
+        email,
+        provider,
+      });
     } catch (error) {
       return res.json(error);
     }
 
-    return res.json({
-      id,
-      name,
-      email,
-      provider,
-    });
+
   }
 }
 
